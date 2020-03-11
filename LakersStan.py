@@ -6,19 +6,26 @@ class LakersStan(ChatBot):
   STATES = [
     'waiting',
     'welcome',
-    'Lakers fan',
-    'Lakers Hater',
-    'Basketball fan',
-    'not basketball fan',
-    'saw the last game',
-    'didnt catch the last game',
+    'confused',
+    'Lakers_fan',
+    'Lakers_Hater',
+    'Basketball_fan',
+    'question_section',
+    'not_basketball_fan',
+    'saw_the_last_game',
+    'didnt_catch_the_last_game'
+    'exiting_angry'
   ]
   
   TAGS = {
     # descriptors
-    'like': 'positive',
-    'fan': 'positive',
-    'dont like': 'negative',
+    'like': 'like',
+    'fan': 'like',
+    'love' : 'like',
+    'dont like': 'dislike',
+    'dont' : 'dislike',
+    'hate' : 'dislike',
+    
     
     #Greatings
     'Hello': 'Hello',
@@ -31,11 +38,17 @@ class LakersStan(ChatBot):
     'yes': 'yes',
     'Yeah': 'yes',
     'no': 'no',
-    'nah': 'no'
-  }
+    'nah': 'no',
     
+    #basketball
+    'basketball' : 'basketball'
     
-  TEAMS = {
+    #memory
+    'already' : 'again',
+    'before' : 'again',
+    'just' : 'again'
+
+    #teams
     'Atlanta Hawks': 'Hawks',
     'Atlanta': 'Hawks',
     'Hawks': 'Hawks',
@@ -49,7 +62,7 @@ class LakersStan(ChatBot):
     'Charlotte': 'Hornets',
     'Hornets': 'Hornets',
     'Chicago Bulls': 'Bulls',
-    'Chicago': 'Bulls,
+    'Chicago': 'Bulls',
     'Bulls': 'Bulls',
     'Cleveland Cavaliers': 'Cavaliers',
     'Cleveland': 'Cavaliers',
@@ -68,16 +81,13 @@ class LakersStan(ChatBot):
     'Warriors': 'Warriors',
     'Houston Rockets': 'Rockets',
     'Houston': 'Rockets',
-    'Rockets': 'Rockets
+    'Rockets': 'Rockets',
     'Indiana Pacers': 'Pacers',
     'Indiana': 'Pacers',
     'Pacers': 'Pacers',
     'LA Clippers': 'Clippers',
     'LA': 'Clippers',
     'Clippers': 'Clippers',
-    'Los Angeles Lakers': 'Lakers',
-    'Los Angeles': 'Lakers',
-    'Lakers', 'Lakers',
     'Memphis Grizzlies': 'Grizzlies',
     'Memphis': 'Grizzlies',
     'Grizzlies': 'Grizzlies',
@@ -125,7 +135,42 @@ class LakersStan(ChatBot):
     'Jazz', 'Jazz',
     'Washington Wizards': 'Wizards',
     'Washington': 'Wizards',
-    'Wizards': 'Wizards' 
+    'Wizards': 'Wizards', 
+    'Los Angeles Lakers' : 'Lakers',
+    'Lakers' : 'Lakers'
+  }
+    
+    
+  TEAMS = {
+    'Hawks',
+    'Celtics',
+    'Nets',
+    'Hornets',
+    'Bulls',
+    'Cavaliers',
+    'Mavericks',
+    'Nuggets',
+    'Pistons',
+    'Warriors',
+    'Rockets',
+    'Pacers',
+    'Clippers',
+    'Grizzlier',
+    'Heat',
+    'Bucks',
+    'Timberwolves',
+    'Pelicans',
+    'Knicks',
+    'Thunder',
+    'Magic',
+    '76ers',
+    'Suns',
+    'Blazers',
+    'Kings',
+    'Spurs',
+    'Raptors',
+    'Jazz',
+    'Wizards'
   }
   # initialize the bot
   def __init__(self):
@@ -139,14 +184,51 @@ class LakersStan(ChatBot):
     else:
       return self.finish('confused')
   
-  # "specify_faculty" state functions
+  # enter the welcome state state functions
   
   def on_enter_welcome(self):
     return "Hey! I haven't seen you around before, are you a laker-head too?"
   
-  # enter the conversation
+  # enter the conversation: redirects to states based on the users feelings towards the Lakers
   def respond_welcome(self, message, tags):
+    self.team = None
     if 'yes' in tags:
       return self.go_to_state('Lakers fan')
     elif 'no' in tags:
-      return self.go_to_state('Lakers hater')
+      for team in self.TEAMS:
+        if team in tags:
+          self.team = team
+          return self.go_to_state('Lakers hater')
+    return self.go_to_state('question section')
+  
+  # follow - up state if the user does not specify an alternate team they follow
+  def on_enter_question_section(self):
+    return " ".join(["Thats a shame :/ ...", 
+                     "If ur not a lakers fan, what team do u follow?" ])
+  
+  # Identifies if they don't like the lakers or if they don't like basketball
+  def respond_from_question_section(self, message, tags):
+    self.team = None
+    for team in self.TEAMS:
+      if team in tags:
+        self.team = team
+        return self.go_to_state('Lakers hater')
+    if 'dislike' in tags:
+      if 'basketball' in tags:
+        return self.go_to_state('not_basketball_fan')
+    return self.go_to_state('confused')
+  
+  #response if they officially don't like the lakers but like another team
+  def on_enter_Lakers_hater(self):
+    respond " ".join([ "You're a", self.team.capitalize(), "fan?!",
+                      "Im really trying to be nicer on the ol' web, after those punk ass mods banned me from r/NBA, but c'mon your a",
+                      self.team, "fan!", "I honestly thought they got relegated to the B league after their last season"])
+    
+  # the bot exits in an angry fashion
+  def respond_from_Lakers_hater(self):
+    respond self.go_to_state('exiting_angry')
+    
+  # responds with angry exit message, moves back to waiting state
+  def on_enter_exiting_angry(self):
+    respond "Honestly can't even process what your saying right now. Not sure if its the 6 pack of coors im sipping on, or the concusion I got last week while playing at the rec center but im furious. I need to go cool off, I hope when Im back youve come to ur senses and support the lakers", self.go_to_state('waiting')
+  

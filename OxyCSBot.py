@@ -1,5 +1,4 @@
-from LakersChatBot import ChatBot
-
+from chatbot import ChatBot
 
 class LakersStan(ChatBot):
 
@@ -13,7 +12,10 @@ class LakersStan(ChatBot):
     'question_section',
     'not_basketball_fan',
     'saw_the_last_game',
-    'didnt_catch_the_last_game'
+    'didnt_catch_the_last_game',
+    'corona_virus',
+    'at_home',
+    'is_sick',
     'exiting_angry'
   ]
   
@@ -23,7 +25,6 @@ class LakersStan(ChatBot):
     'fan': 'like',
     'love' : 'like',
     'dont like': 'dislike',
-    'dont' : 'dislike',
     'hate' : 'dislike',
     
     
@@ -39,14 +40,35 @@ class LakersStan(ChatBot):
     'Yeah': 'yes',
     'no': 'no',
     'nah': 'no',
+    'dont' : 'no',
     
     #basketball
-    'basketball' : 'basketball'
+    'basketball' : 'basketball',
+    
+    #Season shutdown
+    'coronavirus' = 'coronavirus',
+    'covid-19' = 'coronavirus',
+    'novel coronavirus', 'coronavirus',
+    'shutdown' = 'canceled',
+    'canceled' = 'canceled',
+    'closed' = 'canceled',
+    'postpone' = 'canceled',
+    'quaranteen' = 'quaranteen',
+    'sick' = 'sick',
+    'ill' = 'sick',
+    'not well' = 'sick',
+    'vulnerable' = 'vulerable',
+    'old' = 'vulerable',
+    'school' = 'school',
+    'college' = 'school',
+    'university' = 'school',
+    'work' = 'work',
+    'office' = 'work',
     
     #memory
     'already' : 'again',
     'before' : 'again',
-    'just' : 'again'
+    'just' : 'again',
     #teams
     'Atlanta Hawks': 'Hawks',
     'Atlanta': 'Hawks',
@@ -217,6 +239,17 @@ class LakersStan(ChatBot):
         return self.go_to_state('not_basketball_fan')
     return self.go_to_state('confused')
   
+  #response if they like the lakers
+  def on_enter_Lakers_fan(self):
+    respond "Did you catch their last game?"
+  
+  def respond_from_Lakers_fan(self, message, tags):
+    self.gamestatnum = 0
+    if 'yes' in tags:
+      self.go_to_state('saw_last_game')
+    elif 'no' in tags:
+      self.go_to_state('didnt_catch_the_last_game)
+                       
   #response if they officially don't like the lakers but like another team
   def on_enter_Lakers_hater(self):
     respond " ".join([ "You're a", self.team.capitalize(), "fan?!",
@@ -226,8 +259,71 @@ class LakersStan(ChatBot):
   # the bot exits in an angry fashion
   def respond_from_Lakers_hater(self):
     respond self.go_to_state('exiting_angry')
+   
+  # theyve seen the last game of the season
+  def on_enter_saw_last_game(self):
+    if self.gamestatnum = 0:
+      respond "Obviously disapointed about the outcome, but even in defeat the lakers where a pleasure to watch. It sucks we wont see them in action for a while :( ya know with everything thats going on..."
+    elif self.gamestatnum = 1:
+      respond "I still can't believe it, I don't even know what to do with myself these days. No school, no sports, its all so strange"
+    elif self.gamestatnum = 2:
+      respond "Never thought i'd see that day that an entire season was canceled, this virus is some really crazy shit."
+    elif self.gamestatnum = 3:
+      respond "A whole season shutdown because of a virus, like I get it but still. Its crazy"
+    elif self.gamestatnum = 4:
+      respond "Have you not heard? The NBA has ended its season untill this whole coronavirus things gets sorted out"   
+      self.go_to_state('corona_virus')
+  
+  #take response and redirect
+   def respond_from_saw_last_game(self, message, tags):
+      if 'coronavirus' in tags:
+         if 'canceled' in tags:
+            self.gamestatnum += 1
+            self.go_to_state('saw_last_game')
+         else:
+            self.gamestatnum += 2
+            self.go_to_state('saw_last_game')
+      elif 'canceled' in tags:
+         self.gamestatnum += 3
+         self.go_to_state('saw_last_game')
+      elif 'no' in tags:
+         self.gamestatnum += 4
+                       
+ #didnt see the last game
+  def on_enter_didnt_catch_last_game(self):
+      respond("Well it sucks you missed what might be the last game of the season :/")
+  
+  def respond_from_didnt_catch_last_game(self, message, tags):
+     if 'coronavirus' in tags:
+       self.go_to_state('corona_virus')
+  
+  def on_enter_corona_virus(self):
+     respond("My cities gone full shutdown because of coronavirus, what are you doing since everythings shutdown?"
+             
+  def respond_from_corona_virus(self, message, tags):
+     if 'school' in tags:
+        if 'canceled' in tags:
+           self.go_to_state('at_home')   
+     elif 'work' in tags:
+        if 'canceled' in tags:
+             self.go_to_state('at_home')
+     elif 'sick' in tags:
+        if 'vulnerable' in tags:
+             self.go_to_state('is_sick')
+         
+  
+  #finish states
+  #confused
+  def on_enter_confused(self):
+    respond "I gotta be honest, I'm not the brightest bulb in the drawer. I didn't undestand a word you just said"
+    self.go_to_state('waiting')
     
   # responds with angry exit message, moves back to waiting state
   def on_enter_exiting_angry(self):
-    respond "Honestly can't even process what your saying right now. Not sure if its the 6 pack of coors im sipping on, or the concusion I got last week while playing at the rec center but im furious. I need to go cool off, I hope when Im back youve come to ur senses and support the lakers", self.go_to_state('waiting')
+    respond "Honestly can't even process what your saying right now. Not sure if its the 6 pack of coors im sipping on, or the concusion I got last week while playing at the rec center but im furious. I need to go cool off, I hope when Im back youve come to ur senses and support the lakers"
+    self.go_to_state('waiting')
   
+  #exit not a basketball fan
+  def on_enter_not_basketball_fan(self):
+    respond "It doesn't seem like you're much of a basketball fan... Thats really the only thing I know how to talk about :/ Hit me up if u get an interest in the sport, till im gonna blast."
+    self.go_to_state('waiting')

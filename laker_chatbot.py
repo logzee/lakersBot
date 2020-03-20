@@ -4,7 +4,7 @@
 from chatbot import ChatBot
 
 
-class OxyCSBot(ChatBot):
+class laker_chatbot(ChatBot):
     """A simple chatbot that directs students to office hours of CS professors."""
 
     STATES = [

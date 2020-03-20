@@ -308,9 +308,12 @@ class LakersStan(ChatBot):
         if 'canceled' in tags:
              self.go_to_state('at_home')
      elif 'sick' in tags:
-        if 'vulnerable' in tags:
-             self.go_to_state('is_sick')
-         
+        self.go_to_state('is_sick')
+  
+ def on_enter_is_sick(self):
+     respond "I'm sorry to hear that, well I hope it doesn't get to bad for you. I gotta get back to work, even from home managment is breathing down my neck, but take it easy. Hope you feel better soon"
+ def on_enter_at_home(self):   
+     respond "I'm stuck at home too and theres not even basketball to help pass the time. Ugh, I should actually head out. They've got me working from home, and another task just game in via slack :("    
   
   #finish states
   #confused

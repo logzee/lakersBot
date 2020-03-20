@@ -138,7 +138,7 @@ class LakersStan(ChatBot):
     '76ers': '76ers',
     'Pheonix Suns': 'Suns',
     'Pheonix': 'Suns',
-    'Suns': 'Suns,
+    'Suns': 'Suns',
     'Portland Trail Blazers': 'Trail Blazers',
     'Portland': 'Trail Blazers',
     'Trail Blazers': 'Trail Blazers',
@@ -309,13 +309,16 @@ class LakersStan(ChatBot):
              self.go_to_state('at_home')
      elif 'sick' in tags:
         self.go_to_state('is_sick')
-  
- def on_enter_is_sick(self):
-     respond "I'm sorry to hear that, well I hope it doesn't get to bad for you. I gotta get back to work, even from home managment is breathing down my neck, but take it easy. Hope you feel better soon"
- def on_enter_at_home(self):   
-     respond "I'm stuck at home too and theres not even basketball to help pass the time. Ugh, I should actually head out. They've got me working from home, and another task just game in via slack :("    
+ 
   
   #finish states
+  def on_enter_is_sick(self):
+     respond "I'm sorry to hear that, well I hope it doesn't get to bad for you. I gotta get back to work, even from home managment is breathing down my neck, but take it easy. Hope you feel better soon"
+     self.go_to_state('waiting')
+ def on_enter_at_home(self):   
+     respond "I'm stuck at home too and theres not even basketball to help pass the time. Ugh, I should actually head out. They've got me working from home, and another task just game in via slack :("   
+     self.go_to_state('waiting')
+             
   #confused
   def on_enter_confused(self):
     respond "I gotta be honest, I'm not the brightest bulb in the drawer. I didn't undestand a word you just said"

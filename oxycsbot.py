@@ -3,7 +3,7 @@ from chatbot import ChatBot
 class LakersStan(ChatBot):
 
   STATES = [
-    'waiting',
+		'waiting',
     'welcome',
     'confused',
     'Lakers_fan',
@@ -26,7 +26,6 @@ class LakersStan(ChatBot):
     'love' : 'like',
     'dont like': 'dislike',
     'hate' : 'dislike',
-    
     
     #Greatings
     'Hello': 'Hello',
@@ -162,7 +161,7 @@ class LakersStan(ChatBot):
   }
     
     
-  TEAMS = {
+  TEAMS = [
     'Hawks',
     'Celtics',
     'Nets',
@@ -192,7 +191,7 @@ class LakersStan(ChatBot):
     'Raptors',
     'Jazz',
     'Wizards'
-  }
+		]
   # initialize the bot
   def __init__(self):
     #Initialize lakers bot
@@ -203,16 +202,16 @@ class LakersStan(ChatBot):
     if 'Hello' in tags:
       return self.go_to_state('welcome')
     else:
-      return self.finish('confused')
+			return self.finish('confused')
   
   # enter the welcome state state functions
   
   def on_enter_welcome(self):
-    return "Hey! I haven't seen you around before, are you a laker-head too?"
+		return "Hey! I haven't seen you around before, are you a laker-head too?"
   
   # enter the conversation: redirects to states based on the users feelings towards the Lakers
   def respond_welcome(self, message, tags):
-    self.team = None
+		self.team = None
     if 'yes' in tags:
       return self.go_to_state('Lakers fan')
     elif 'no' in tags:
@@ -244,26 +243,28 @@ class LakersStan(ChatBot):
     respond "Did you catch their last game?"
   
   def respond_from_Lakers_fan(self, message, tags):
-    self.gamestatnum = 0
-    if 'yes' in tags:
-      self.go_to_state('saw_last_game')
-    elif 'no' in tags:
-      self.go_to_state('didnt_catch_the_last_game)
+		self.gamestatnum = 0
+		if 'yes' in tags:
+			return self.go_to_state('saw_last_game')
+		elif 'no' in tags:
+			return self.go_to_state('didnt_catch_the_last_game')
+	 return self.go_to_state('confused')
+	
                        
   #response if they officially don't like the lakers but like another team
   def on_enter_Lakers_hater(self):
-    respond " ".join([ "You're a", self.team.capitalize(), "fan?!",
+		respond " ".join([ "You're a", self.team.capitalize(), "fan?!",
                       "Im really trying to be nicer on the ol' web, after those punk ass mods banned me from r/NBA, but c'mon your a",
                       self.team, "fan!", "I honestly thought they got relegated to the B league after their last season"])
     
   # the bot exits in an angry fashion
-  def respond_from_Lakers_hater(self):
-    respond self.go_to_state('exiting_angry')
+	def respond_from_Lakers_hater(self):
+		respond self.go_to_state('exiting_angry')
    
   # theyve seen the last game of the season
   def on_enter_saw_last_game(self):
-    if self.gamestatnum = 0:
-      respond "Obviously disapointed about the outcome, but even in defeat the lakers where a pleasure to watch. It sucks we wont see them in action for a while :( ya know with everything thats going on..."
+		if self.gamestatnum = 0:
+			respond "Obviously disapointed about the outcome, but even in defeat the lakers where a pleasure to watch. It sucks we wont see them in action for a while :( ya know with everything thats going on..."
     elif self.gamestatnum = 1:
       respond "I still can't believe it, I don't even know what to do with myself these days. No school, no sports, its all so strange"
     elif self.gamestatnum = 2:

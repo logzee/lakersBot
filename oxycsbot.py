@@ -1,6 +1,6 @@
 from chatbot import ChatBot
 
-class LakersStan(ChatBot):
+class OxyCSBot(ChatBot):
     STATES = [
         'waiting',
         'welcome',
@@ -326,4 +326,4 @@ class LakersStan(ChatBot):
             return "It doesn't seem like you're much of a basketball fan... Thats really the only thing I know how to talk about :/ Hit me up if u get an interest in the sport, till im gonna blast."	
         
 if __name__ = '__main__':
-    LakersStan().chat()
+    OxyCSBot().chat()

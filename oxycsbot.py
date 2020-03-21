@@ -2,7 +2,7 @@ from chatbot import ChatBot
 
 class LakersStan(ChatBot):
 	STATES = [
-		'waiting',
+	'waiting',
     'welcome',
     'confused',
     'Lakers_fan',
@@ -199,10 +199,10 @@ class LakersStan(ChatBot):
     
   # responses from the waiting state function
   def respond_from_waiting(self, message, tags):
-    if 'Hello' in tags:
-      return self.go_to_state('welcome')
-    else:
-			return self.finish('confused')
+	if 'Hello' in tags:
+		return self.go_to_state('welcome')
+	else:
+		return self.finish('confused')
   
   # enter the welcome state state functions
   
@@ -236,7 +236,7 @@ class LakersStan(ChatBot):
     if 'dislike' in tags:
       if 'basketball' in tags:
         return self.go_to_state('not_basketball_fan')
-    return self.go_to_state('confused')
+    return self.finish('confused')
   
   #response if they like the lakers
   def on_enter_Lakers_fan(self):
@@ -248,7 +248,7 @@ class LakersStan(ChatBot):
 			return self.go_to_state('saw_last_game')
 		elif 'no' in tags:
 			return self.go_to_state('didnt_catch_the_last_game')
-	  return self.go_to_state('confused')
+	  return self.finish('confused')
 	
                        
   #response if they officially don't like the lakers but like another team
@@ -259,7 +259,7 @@ class LakersStan(ChatBot):
     
   # the bot exits in an angry fashion
 	def respond_from_Lakers_hater(self):
-		return self.go_to_state('exiting_angry')
+		return self.finish('angry')
    
   # theyve seen the last game of the season
 	def on_enter_saw_last_game(self):
@@ -290,8 +290,8 @@ class LakersStan(ChatBot):
 			elif 'no' in tags:
 				self.gamestatnum += 4
 				return self.go_to_state('saw_last_game')
-			return self.go_to_state('confused')
-		return self.go_to_state('confused')
+			return self.finish('confused')
+		return self.finish('confused')
 	
 	#didnt see the last game
 	def on_enter_didnt_catch_last_game(self):
@@ -300,7 +300,7 @@ class LakersStan(ChatBot):
 	def respond_from_didnt_catch_last_game(self, message, tags):
 		if 'coronavirus' in tags:
 			return self.go_to_state('corona_virus')
-		return self.go_to_state('confused')
+		return self.finish('confused')
 	
 	def on_enter_corona_virus(self):
 		return "My cities gone full shutdown because of coronavirus, what are you doing since everythings shutdown?"
@@ -308,34 +308,33 @@ class LakersStan(ChatBot):
 	def respond_from_corona_virus(self, message, tags):
 		if 'school' in tags:
 			if 'canceled' in tags:
-				return self.go_to_state('at_home')   
+				return self.finish('home')   
 			elif 'work' in tags:
 				if 'canceled' in tags:
-					return self.go_to_state('at_home')
+					return self.finish('home')
 				elif 'sick' in tags:
-					return self.go_to_state('is_sick')
-				return self.go_to_state('confused')
-			return self.go_to_state('confused')
-		return self.go_to_state('confused')
+					return self.finish('sick')
+				return self.finish('confused')
+			return self.finish('confused')
+		return self.finish('confused')
 	
 	#finish states
-	def on_enter_is_sick(self):
-		return "I'm sorry to hear that, well I hope it doesn't get to bad for you. I gotta get back to work, even from home managment is breathing down my neck, but take it easy. Hope you feel better soon", self.go_to_state('waiting')
+	def finish_sick(self):
+		return "I'm sorry to hear that, well I hope it doesn't get to bad for you. I gotta get back to work, even from home managment is breathing down my neck, but take it easy. Hope you feel better soon"
 	
-	def on_enter_at_home(self):   
-		return "I'm stuck at home too and theres not even basketball to help pass the time. Ugh, I should actually head out. They've got me working from home, and another task just game in via slack :(", self.go_to_state('waiting')
+	def finish_home(self):   
+		return "I'm stuck at home too and theres not even basketball to help pass the time. Ugh, I should actually head out. They've got me working from home, and another task just game in via slack :("
 	
 	#confused
-	def on_enter_confused(self):
-		return "I gotta be honest, I'm not the brightest bulb in the drawer. I didn't undestand a word you just said", self.go_to_state('waiting')
+	def finish_confused(self):
+		return "I gotta be honest, I'm not the brightest bulb in the drawer. I didn't undestand a word you just said"
 	
 	# responds with angry exit message, moves back to waiting state
-	def on_enter_exiting_angry(self):
-		return "Honestly can't even process what your saying right now. Not sure if its the 6 pack of coors im sipping on, or the concusion I got last week while playing at the rec center but im furious. I need to go cool off, I hope when Im back youve come to ur senses and support the lakers", self.go_to_state('waiting')
+	def finish_angry(self):
+		return "Honestly can't even process what your saying right now. Not sure if its the 6 pack of coors im sipping on, or the concusion I got last week while playing at the rec center but im furious. I need to go cool off, I hope when Im back youve come to ur senses and support the lakers"
   
 	#exit not a basketball fan
-	def on_enter_not_basketball_fan(self):
-		return "It doesn't seem like you're much of a basketball fan... Thats really the only thing I know how to talk about :/ Hit me up if u get an interest in the sport, till im gonna blast.", self.go_to_state('waiting')
-	
+	def finish_noBasketball(self):
+		return "It doesn't seem like you're much of a basketball fan... Thats really the only thing I know how to talk about :/ Hit me up if u get an interest in the sport, till im gonna blast."	
 if __name__ = '__main__':
 	LakersStan().chat()

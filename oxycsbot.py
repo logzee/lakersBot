@@ -5,8 +5,8 @@ class OxyCSBot(ChatBot):
     STATES = [
         'waiting',
         'welcome',
-        'Lakers_fan',
-        'Lakers_Hater',
+        'lakers_fan',
+        'lakers_Hater',
         'question_section',
         'saw_the_last_game',
         'didnt_catch_the_last_game',
@@ -198,12 +198,12 @@ class OxyCSBot(ChatBot):
     def respond_welcome(self, message, tags):
         self.team = None
         if 'yes' in tags:
-            return self.go_to_state('Lakers fan')
+            return self.go_to_state('lakers fan')
         elif 'no' in tags:
             for team in self.TEAMS:
                 if team in tags:
                     self.team = team
-                    return self.go_to_state('Lakers hater')
+                    return self.go_to_state('lakers hater')
                 return self.go_to_state('question section')
             return self.finish('confused')
         return self.finish('confused')
@@ -218,19 +218,19 @@ class OxyCSBot(ChatBot):
         for team in self.TEAMS:
             if team in tags:
                 self.team = team
-                return self.go_to_state('Lakers hater')
+                return self.go_to_state('lakers hater')
             if 'dislike' in tags:
                 if 'basketball' in tags:
-                    return self.go_to_state('not_basketball_fan')
+                    return self.finish('noBasketball')
                 return self.finish('confused')
             return self.finish('confused')
         return self.finish('confused')
     
     #response if they like the lakers
-    def on_enter_Lakers_fan(self):
+    def on_enter_lakers_fan(self):
         return "Did you catch their last game?"
     
-    def respond_from_Lakers_fan(self, message, tags):
+    def respond_from_lakers_fan(self, message, tags):
         self.gamestatnum = 0
         if 'yes' in tags:
             return self.go_to_state('saw_last_game')
@@ -240,13 +240,13 @@ class OxyCSBot(ChatBot):
 	
                        
         #response if they officially don't like the lakers but like another team
-        def on_enter_Lakers_hater(self):
+        def on_enter_lakers_hater(self):
             return " ".join([ "You're a", self.team.capitalize(), "fan?!",
                              "Im really trying to be nicer on the ol' web, after those punk ass mods banned me from r/NBA, but c'mon your a",
                              self.team, "fan!", "I honestly thought they got relegated to the B league after their last season"])
         
         # the bot exits in an angry fashion
-        def respond_from_Lakers_hater(self):
+        def respond_from_lakers_hater(self):
             return self.finish('angry')
         
         # theyve seen the last game of the season

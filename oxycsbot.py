@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from chatbot import ChatBot
 
 class OxyCSBot(ChatBot):
@@ -6,12 +7,10 @@ class OxyCSBot(ChatBot):
         'welcome',
         'Lakers_fan',
         'Lakers_Hater',
-        'Basketball_fan',
         'question_section',
-        'not_basketball_fan',
         'saw_the_last_game',
         'didnt_catch_the_last_game',
-        'corona_virus',
+        'corona_virus'
     ]
     
     TAGS = {
@@ -208,6 +207,7 @@ class OxyCSBot(ChatBot):
                 return self.go_to_state('question section')
             return self.finish('confused')
         return self.finish('confused')
+
     # follow - up state if the user does not specify an alternate team they follow
     def on_enter_question_section(self):
         return " ".join(["Thats a shame :/ ...", 

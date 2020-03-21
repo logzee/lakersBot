@@ -333,3 +333,5 @@ class LakersStan(ChatBot):
   def on_enter_not_basketball_fan(self):
     respond "It doesn't seem like you're much of a basketball fan... Thats really the only thing I know how to talk about :/ Hit me up if u get an interest in the sport, till im gonna blast."
     self.go_to_state('waiting')
+if __name__ = '__main__':
+	   LakersStan().chat()

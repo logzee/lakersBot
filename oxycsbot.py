@@ -21,24 +21,24 @@ class OxyCSBot(ChatBot):
         'dont like': 'dislike',
         'hate' : 'dislike',
 		
-        #Greatings
+        # Greatings
         'Hello': 'Hello',
         'Hi': 'Hello',
         'Greetings': 'Hello',
         'Howdy': 'Hello',
         'Hey': 'Hello',
 		
-        #yes / no
+        # yes / no
         'yes': 'yes',
         'Yeah': 'yes',
         'no': 'no',
         'nah': 'no',
         'dont' : 'no',
 		
-        #basketball
+        # basketball
         'basketball' : 'basketball', 
 		
-        #Season shutdown
+        # Season shutdown
         'coronavirus' : 'coronavirus',
         'covid-19' : 'coronavirus',
         'novel coronavirus', 'coronavirus',
@@ -57,12 +57,12 @@ class OxyCSBot(ChatBot):
         'work' : 'work',
         'office' : 'work',  
 		
-        #memory
+        # memory
         'already' : 'again',
         'before' : 'again',
         'just' : 'again',
 		
-		#teams
+		# teams
 	    'Atlanta Hawks' : 'Hawks',
 	    'Atlanta': 'Hawks',
 	    'Hawks': 'Hawks',

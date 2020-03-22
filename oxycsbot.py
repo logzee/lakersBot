@@ -207,13 +207,13 @@ class OxyCSBot(ChatBot):
     def respond_from_welcome(self, message, tags):
         self.team = None
         if 'yes' in tags:
-            return self.go_to_state('lakers fan')
+            return self.go_to_state('lakers_fan')
         elif 'no' in tags:
             for team in self.TEAMS:
                 if team in tags:
                     self.team = team
-                    return self.go_to_state('lakers hater')
-                return self.go_to_state('question section')
+                    return self.go_to_state('lakers_hater')
+                return self.go_to_state('question_section')
             return self.finish('confused')
         return self.finish('confused')
 
@@ -229,7 +229,7 @@ class OxyCSBot(ChatBot):
         for team in self.TEAMS:
             if team in tags:
                 self.team = team
-                return self.go_to_state('lakers hater')
+                return self.go_to_state('lakers_hater')
             if 'dislike' in tags:
                 if 'basketball' in tags:
                     return self.finish('noBasketball')

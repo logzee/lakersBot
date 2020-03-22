@@ -10,7 +10,7 @@ class OxyCSBot(ChatBot):
         'lakers_Hater',
         'question_section',
         'saw_the_last_game',
-        'didnt_catch_the_last_game',
+        'didnt_catch_last_game',
         'corona_virus'
     ]
 
@@ -212,7 +212,7 @@ class OxyCSBot(ChatBot):
             for team in self.TEAMS:
                 if team in tags:
                     self.team = team
-                    return self.go_to_state('lakers_hater')
+                    return self.go_to_state('lakers_Hater')
                 return self.go_to_state('question_section')
             return self.finish('confused')
         return self.finish('confused')
@@ -229,7 +229,7 @@ class OxyCSBot(ChatBot):
         for team in self.TEAMS:
             if team in tags:
                 self.team = team
-                return self.go_to_state('lakers_hater')
+                return self.go_to_state('lakers_Hater')
             if 'dislike' in tags:
                 if 'basketball' in tags:
                     return self.finish('noBasketball')
@@ -249,7 +249,7 @@ class OxyCSBot(ChatBot):
         return self.finish('confused')
 
     # response if they officially don't like the lakers but like another team\
-    def on_enter_lakers_hater(self):
+    def on_enter_lakers_Hater(self):
         return_msg = " ".join(["You're a", self.team.capitalize(), "fan?!",
                         "Im really trying to be nicer on the ol' web, after those punk ass mods banned me from r/NBA, but c'mon your a",
                         self.team, "fan!",
@@ -258,7 +258,7 @@ class OxyCSBot(ChatBot):
         return return_msg
 
     # the bot exits in an angry fashion
-    def respond_from_lakers_hater(self, messages, tags):
+    def respond_from_lakers_Hater(self, messages, tags):
         return self.finish('angry')
 
     # theyve seen the last game of the season

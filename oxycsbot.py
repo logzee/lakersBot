@@ -191,9 +191,11 @@ class OxyCSBot(ChatBot):
             return self.go_to_state('welcome')
         else:
             return self.finish('confused')
+		
     # enter the welcome state state functions
     def on_enter_welcome(self):
         return "Hey! I haven't seen you around before, are you a laker-head too?"
+	
     # enter the conversation: redirects to states based on the users feelings towards the Lakers
     def respond_welcome(self, message, tags):
         self.team = None
@@ -210,9 +212,10 @@ class OxyCSBot(ChatBot):
 
     # follow - up state if the user does not specify an alternate team they follow
     def on_enter_question_section(self):
-        response = " ".join(["Thats a shame :/ ...", 
+		response = " ".join(["Thats a shame :/ ...", 
                          "If ur not a lakers fan, what team do u follow?" ])
-	return response
+		return response
+
     # Identifies if they don't like the lakers or if they don't like basketball
     def respond_from_question_section(self, message, tags):
         self.team = None
@@ -245,6 +248,7 @@ class OxyCSBot(ChatBot):
 								"Im really trying to be nicer on the ol' web, after those punk ass mods banned me from r/NBA, but c'mon your a",
 								self.team, "fan!", "I honestly thought they got relegated to the B league after their last season"])
        return return_msg
+
 	# the bot exits in an angry fashion
 	def respond_from_lakers_hater(self):
 		return self.finish('angry')
@@ -262,6 +266,7 @@ class OxyCSBot(ChatBot):
 		elif self.gamestatnum = 4:
 			return "Have you not heard? The NBA has ended its season untill this whole coronavirus things gets sorted out"   
 		return self.go_to_state('corona_virus')
+	
 	#take response and redirect
 	def respond_from_saw_last_game(self, message, tags):
 		if 'coronavirus' in tags:
@@ -279,6 +284,7 @@ class OxyCSBot(ChatBot):
 				return self.go_to_state('saw_last_game')
 			return self.finish('confused')
 		return self.finish('confused')
+	
 	#didnt see the last game
 	def on_enter_didnt_catch_last_game(self):
 		return "Well it sucks you missed what might be the last game of the season :/"
@@ -323,5 +329,5 @@ class OxyCSBot(ChatBot):
 	def finish_noBasketball(self):
 		return "It doesn't seem like you're much of a basketball fan... Thats really the only thing I know how to talk about :/ Hit me up if u get an interest in the sport, till im gonna blast."	
         
-if __name__ = '__main__':
+if __name__ == '__main__':
     OxyCSBot().chat()

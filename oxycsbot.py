@@ -210,8 +210,9 @@ class OxyCSBot(ChatBot):
 
     # follow - up state if the user does not specify an alternate team they follow
     def on_enter_question_section(self):
-        return " ".join(["Thats a shame :/ ...", 
+        response = " ".join(["Thats a shame :/ ...", 
                          "If ur not a lakers fan, what team do u follow?" ])
+	return response
     # Identifies if they don't like the lakers or if they don't like basketball
     def respond_from_question_section(self, message, tags):
         self.team = None
@@ -243,7 +244,7 @@ class OxyCSBot(ChatBot):
 		return_msg =  " ".join([ "You're a", self.team.capitalize(), "fan?!",
 								"Im really trying to be nicer on the ol' web, after those punk ass mods banned me from r/NBA, but c'mon your a",
 								self.team, "fan!", "I honestly thought they got relegated to the B league after their last season"])
-        return return_msg
+       return return_msg
 	# the bot exits in an angry fashion
 	def respond_from_lakers_hater(self):
 		return self.finish('angry')

@@ -25,9 +25,13 @@ class OxyCSBot(ChatBot):
              'Greetings': 'Hello',
              'Howdy': 'Hello',
              'Hey': 'Hello',
+             'yo' : 'Hello',
+             'sup' : 'Hello',
              # yes / no
              'yes': 'yes',
              'Yeah': 'yes',
+             'Yup' : 'yes',
+             'You know it' : 'yes',
              'no': 'no',
              'nah': 'no',
              'dont': 'no',

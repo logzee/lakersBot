@@ -9,7 +9,7 @@ class OxyCSBot(ChatBot):
         'lakers_fan',
         'lakers_Hater',
         'question_section',
-        'saw_the_last_game',
+        'saw_last_game',
         'didnt_catch_last_game',
         'corona_virus'
     ]
@@ -270,7 +270,7 @@ class OxyCSBot(ChatBot):
         elif self.gamestatnum == 2:
             return "Never thought i'd see that day that an entire season was canceled, this virus is some really crazy shit."
         elif self.gamestatnum == 3:
-            return "A whole season shutdown because of a virus, like I get it but still. Its crazy"
+            return "But a whole season shutdown because of a virus, like I get it but still. Its crazy"
         elif self.gamestatnum == 4:
             return "Have you not heard? The NBA has ended its season untill this whole coronavirus things gets sorted out"
         return self.go_to_state('corona_virus')
@@ -334,7 +334,7 @@ class OxyCSBot(ChatBot):
 
     # exit not a basketball fan
     def finish_noBasketball(self):
-        return "It doesn't seem like you're much of a basketball fan... Thats really the only thing I know how to talk about :/ Hit me up if u get an interest in the sport, till im gonna blast."
+        return "It doesn't seem like you're much of a basketball fan... Thats really the only thing I know how to talk about :/ Hit me up if u get an interest in the sport, till then im gonna blast."
 
 
 if __name__ == '__main__':

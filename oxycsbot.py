@@ -45,7 +45,6 @@ class OxyCSBot(ChatBot):
         'quaranteen' : 'quaranteen',
         'sick' : 'sick',
         'ill' : 'sick',
-        'not well' : 'sick',
         'vulnerable' : 'vulerable',
         'old' : 'vulerable',
         'school' : 'school',

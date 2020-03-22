@@ -57,7 +57,7 @@ class OxyCSBot(ChatBot):
         'before' : 'again',
         'just' : 'again',
         #teams
-        'Atlanta Hawks': 'Hawks',
+		'Atlanta Hawks' : 'Hawks',
         'Atlanta': 'Hawks',
         'Hawks': 'Hawks',
         'Boston Celtics': 'Celtics',

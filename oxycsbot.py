@@ -276,14 +276,14 @@ class OxyCSBot(ChatBot):
 			else:
 				self.gamestatnum += 2
 				return self.go_to_state('saw_last_game')
-			elif 'canceled' in tags:
-				self.gamestatnum += 3
-				return self.go_to_state('saw_last_game')
-			elif 'no' in tags:
-				self.gamestatnum += 4
-				return self.go_to_state('saw_last_game')
-			return self.finish('confused')
+		elif 'canceled' in tags:
+			self.gamestatnum += 3
+			return self.go_to_state('saw_last_game')
+		elif 'no' in tags:
+			self.gamestatnum += 4
+			return self.go_to_state('saw_last_game')
 		return self.finish('confused')
+	
 	
 	#didnt see the last game
 	def on_enter_didnt_catch_last_game(self):

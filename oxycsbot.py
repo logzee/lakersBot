@@ -41,6 +41,7 @@ class OxyCSBot(ChatBot):
              'coronavirus': 'coronavirus',
              'covid-19': 'coronavirus',
              'novel coronavirus': 'coronavirus',
+             'virus' : 'coronavirus',
              'shutdown': 'canceled',
              'canceled': 'canceled',
              'closed': 'canceled',
@@ -214,8 +215,7 @@ class OxyCSBot(ChatBot):
                     self.team = team
                     return self.go_to_state('lakers_Hater')
                 return self.go_to_state('question_section')
-            return self.finish('confused')
-        return self.finish('confused')
+        return self.go_to_state('question_section')
 
     # follow - up state if the user does not specify an alternate team they follow
     def on_enter_question_section(self):

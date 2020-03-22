@@ -250,7 +250,7 @@ class OxyCSBot(ChatBot):
        return return_msg
 
 	# the bot exits in an angry fashion
-	def respond_from_lakers_hater(self):
+	def respond_from_lakers_hater(self, messages, tags):
 		return self.finish('angry')
 	
 	# theyve seen the last game of the season

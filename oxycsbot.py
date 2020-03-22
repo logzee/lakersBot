@@ -204,7 +204,7 @@ class OxyCSBot(ChatBot):
         return "Hey! I haven't seen you around before, are you a laker-head too?"
 
     # enter the conversation: redirects to states based on the users feelings towards the Lakers
-    def respond_welcome(self, message, tags):
+    def respond_from_welcome(self, message, tags):
         self.team = None
         if 'yes' in tags:
             return self.go_to_state('lakers fan')
